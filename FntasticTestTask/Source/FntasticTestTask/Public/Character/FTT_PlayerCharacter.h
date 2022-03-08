@@ -9,6 +9,7 @@
 class USkeletalMeshComponent;
 class UCameraComponent;
 
+class APZ_TargetWDActor;
 
 UCLASS()
 class FNTASTICTESTTASK_API AFTT_PlayerCharacter : public ACharacter
@@ -91,6 +92,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 		float MouseSensitivity = 1.f;
 
+	//....................InteractiveObjects Interface......................//
+	UFUNCTION()
+		void OnPotentialForInteractChanged(AActor* InteractiveActor, bool WasRemoved);
 
 //c++ protected methods
 protected:
@@ -107,6 +111,7 @@ private:
 
 	FTimerHandle UpdateTargetViewTimerHandle;
 
+	AFTT_TargetHUDWDActor* TargetWDActor = nullptr;
 
 //Blueprint public methods
 public:
@@ -134,6 +139,12 @@ public:
 //Blueprint values
 public:
 
+
+	/*
+		Class of the container of object target widget.
+	*/
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "PlayerCharacter | TargetWDActor")
+		TSubclassOf<AFTT_TargetHUDWDActor> TargetWDActorClass;
 	//..............................................TargetItem........................................//
 
 	/*

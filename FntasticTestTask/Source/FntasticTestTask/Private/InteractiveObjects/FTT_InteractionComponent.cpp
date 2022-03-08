@@ -83,10 +83,18 @@ void UFTT_InteractionComponent::AddToPotentialInteract(AActor* InteractiveObject
 void UFTT_InteractionComponent::RemoveFromPotentialInteract(AActor* InteractiveObject)
 {
 	PotentialForInteract.Remove(InteractiveObject);
+
+	OnPotentialForInteractChanged(InteractiveObject, true);
+	OnPotentialForInteractChangedBind.Broadcast(InteractiveObject, true);
 }
 
 void UFTT_InteractionComponent::RemoveAllFromPotentialInteract()
 {
+	for (int i = PotentialForInteract.Num() - 1; i >= 0; --i)
+	{
+		RemoveFromPotentialInteract(PotentialForInteract[i]);
+	}
+
 	PotentialForInteract.Empty();
 }
 

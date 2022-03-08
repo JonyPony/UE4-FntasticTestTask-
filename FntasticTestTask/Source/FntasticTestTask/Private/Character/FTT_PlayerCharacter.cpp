@@ -5,6 +5,8 @@
 #include "Character/FTT_PlayerController.h"
 #include "Character/FTT_PlayerInputActions.h"
 
+#include "TargetHUD_WD/FTT_TargetHUDWDActor.h"
+#include "InteractiveObjects/FTT_InteractiveObjectInterface.h"
 
 #include "GameFramework/GameUserSettings.h"
 
@@ -75,6 +77,14 @@ void AFTT_PlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	InteractionComponent->OnPotentialForInteractChangedBind.AddDynamic(this, &AFTT_PlayerCharacter::OnPotentialForInteractChanged);
+
+	if (TargetWDActorClass)
+	{
+		FActorSpawnParameters LTargetWDActorSpawnParams;
+		LTargetWDActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		TargetWDActor = GetWorld()->SpawnActor<AFTT_TargetHUDWDActor>(TargetWDActorClass, LTargetWDActorSpawnParams);
+	}
 }
 
 float AFTT_PlayerCharacter::GetAngleBetweenActors(AActor* A, AActor* B)
@@ -178,6 +188,25 @@ void AFTT_PlayerCharacter::OnPressInteract()
 }
 
 
+void AFTT_PlayerCharacter::OnPotentialForInteractChanged(AActor* InteractiveActor, bool WasRemoved)
+{
+	if (!IsValid(PlayerController) || !IsValid(InteractiveActor)) return;
+
+	if (InteractiveActor->GetClass()->ImplementsInterface(UFTT_InteractiveObjectInterface::StaticClass()))
+	{
+		IFTT_InteractiveObjectInterface::Execute_TargetInteractiveObject(InteractiveActor, !WasRemoved);
+	}
+
+	if (!IsValid(TargetWDActor)) return;
+
+	if (InteractionComponent->GetPotentialForInteractObjects().Num() == 0)
+	{
+		TargetWDActor->HideTarget();
+		return;
+	}
+
+	TargetWDActor->ShowTargetByActor(InteractiveActor, FirstPersonCameraComponent);
+}
 
 
 
