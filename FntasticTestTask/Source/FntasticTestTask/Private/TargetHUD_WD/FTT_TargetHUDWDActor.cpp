@@ -13,7 +13,6 @@ AFTT_TargetHUDWDActor::AFTT_TargetHUDWDActor()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-
 	TargetWDComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("TargetWD"));
 	TargetWDComponent->CastShadow = false;
 }
@@ -22,7 +21,6 @@ AFTT_TargetHUDWDActor::AFTT_TargetHUDWDActor()
 void AFTT_TargetHUDWDActor::BeginPlay()
 {
 	Super::BeginPlay();
-
 
 	SetActorTickEnabled(false);
 	SetActorHiddenInGame(true);

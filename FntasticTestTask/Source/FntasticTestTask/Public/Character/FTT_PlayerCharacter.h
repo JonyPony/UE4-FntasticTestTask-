@@ -131,7 +131,7 @@ public:
 		Class of the container of object target widget.
 	*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "PlayerCharacter | TargetWDActor")
-		TSubclassOf<AFTT_TargetHUDWDActor> TargetWDActorClass;
+		TSubclassOf<AFTT_TargetHUDWDActor> TargetWDActorClass = nullptr;
 
 	//..............................................TargetItem........................................//
 
@@ -181,10 +181,10 @@ public:
 	//.................................Components.....................................................//
 
 	UPROPERTY(BlueprintReadOnly, Category = "PlayerCharacter | Components")
-		class UFTT_InteractionComponent* InteractionComponent;
+		class UFTT_InteractionComponent* InteractionComponent = nullptr;
 
 	UPROPERTY(BlueprintReadOnly, Category = "PlayerCharacter | Components", meta = (AllowPrivateAccess = "true"))
-		class UCameraComponent* FirstPersonCameraComponent;
+		class UCameraComponent* FirstPersonCameraComponent = nullptr;
 
 	//................................................................................................//
 

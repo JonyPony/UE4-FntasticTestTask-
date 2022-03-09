@@ -56,7 +56,7 @@ void AFTT_PlayerCharacter::BeginPlay()
 
 	InteractionComponent->OnPotentialForInteractChangedBind.AddDynamic(this, &AFTT_PlayerCharacter::OnPotentialForInteractChanged);
 
-	if (TargetWDActorClass)
+	if (TargetWDActorClass != nullptr)
 	{
 		FActorSpawnParameters LTargetWDActorSpawnParams;
 		LTargetWDActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
@@ -163,9 +163,7 @@ void AFTT_PlayerCharacter::LookUp(float AxisValue)
 
 void AFTT_PlayerCharacter::OnPressInteract()
 {
-	if (!IsValid(InteractionComponent)) return;
-
-	InteractionComponent->InteractWithPotentialForInteract();
+	if (IsValid(InteractionComponent)) 	InteractionComponent->InteractWithPotentialForInteract();
 }
 
 //............................................................//

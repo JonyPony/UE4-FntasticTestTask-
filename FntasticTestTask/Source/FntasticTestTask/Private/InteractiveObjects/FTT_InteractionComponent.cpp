@@ -120,5 +120,4 @@ void UFTT_InteractionComponent::EndInteractWith_Implementation(AActor* Interacti
 	{
 		LInteractiveObject->OnEndIntaractWith(InteractiveObject, this);
 	}
-
 }
