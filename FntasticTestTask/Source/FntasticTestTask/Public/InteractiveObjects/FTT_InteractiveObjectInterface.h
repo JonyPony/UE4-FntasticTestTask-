@@ -13,6 +13,8 @@ class UFTT_InteractiveObjectInterface : public UInterface
 	GENERATED_UINTERFACE_BODY()
 };
 
+
+
 class FNTASTICTESTTASK_API IFTT_InteractiveObjectInterface 
 {
 	GENERATED_IINTERFACE_BODY()

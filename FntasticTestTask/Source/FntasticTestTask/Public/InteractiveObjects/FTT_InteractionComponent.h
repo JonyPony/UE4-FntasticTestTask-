@@ -13,39 +13,44 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnInteractingObjectChanged, AActor
 
 
 /*
-	It is attaching to an object that will interact with the InteractiveObjectComponent.
-	Interaction is unidirectional InteractionComponent--->InteractiveObjectComponent.
+	It is attaching to an object that will interact with the InteractiveObjec.
 */
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( Blueprintable, ClassGroup = (Custom), meta = (BlueprintSpawnableComponent) )
 class FNTASTICTESTTASK_API UFTT_InteractionComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+//constructor
 public:	
-	// Sets default values for this component's properties
+
 	UFTT_InteractionComponent();
 
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
+//c++ public methods
+public:
 
-public:	
-	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+
+//c++ protected methods
+protected:
+
+	virtual void BeginPlay() override;
 
 
 
 //c++ protected values
 protected:
 
-	UPROPERTY(Transient)
-		TArray<AActor*> PotentialForInteract;//on client side
+	TArray<AActor*> PotentialForInteract;
 
 	AActor* MyActor = nullptr;
 
 
-	//Blueprint methods
+//..........................................................................................................................................//
+//..........................................................................................................................................//
+
+
+//Blueprint methods
 public:
 
 	//...............................................Interacting..............................................................//
@@ -63,16 +68,13 @@ public:
 		void EndInteractWith_Implementation(AActor* InteractiveObject);
 
 
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "InteractComponent|Interacting")
-		void GetInteractingWithObjects(TArray<AActor*>& OutInteractingWithObjects) const;
-
-
-
-
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, BlueprintPure, Category = "InteractComponent|Interacting")
 		bool GetCanInteractWithActor(AActor* Actor) const;
 		virtual bool GetCanInteractWithActor_Implementation(AActor* Actor) const;
 
+
+	UFUNCTION(BlueprintCallable, Category = "InteractComponent|Interacting")
+		bool GetCanTargetedActor(AActor* Actor) const;
 
 	//........................................................................................................................//
 
@@ -120,17 +122,12 @@ public:
 		Can only interact with one object at a time.
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InteractComponent")
-		bool CanInteractOnlyWithOneActor = false;
+		bool CanInteractOnlyWithOneActor = true;
 	/*
 		When trying to add a new potential actor for interaction, it will replace the old one.
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InteractComponent")
-		bool CanHaveOnlyOneActorToPotentialInteract = false;
-	/*
-		When trying to add a new potential actor for interaction, it will replace the old one.
-	*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InteractComponent")
-		TArray<FName> UniqueInteractionNamesInPotentialInteract;
+		bool CanHaveOnlyOneActorToPotentialInteract = true;
 
 	/*
 		The maximum distance to the nearest point of the interactive object for interaction.

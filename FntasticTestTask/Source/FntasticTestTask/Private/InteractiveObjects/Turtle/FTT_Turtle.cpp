@@ -5,12 +5,8 @@
 
 
 
-void AFTT_Turtle::OnActivatedForInteract_Implementation(AActor* InstigatedBy, UFTT_InteractionComponent* InstigatorInteractionComponent)
+void AFTT_Turtle::SetStartEndTransform(const FTransform& StartTransform, const FTransform& EndTransform)
 {
-}
-
-
-
-void AFTT_Turtle::OnEndIntaractWith_Implementation(AActor* InteractedActor, UFTT_InteractionComponent* InteractionComponent)
-{
+	TurtleStartTransform = StartTransform;
+	TurtleEndTransform = EndTransform;
 }

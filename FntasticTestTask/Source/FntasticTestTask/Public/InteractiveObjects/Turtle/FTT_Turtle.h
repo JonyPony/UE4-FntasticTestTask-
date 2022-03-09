@@ -15,25 +15,33 @@ class FNTASTICTESTTASK_API AFTT_Turtle : public AFTT_BaseInteractiveObject
 	GENERATED_BODY()
 
 
+//c++ protected methods
+protected:
+
+	//~ Begin IFTT_InteractiveObjectInterface
+	virtual bool GetCanBeInteractedNow_Implementation() const override { return true; }
+	//~End IFTT_InteractiveObjectInterface
+
 
 //Blueprint methods
 public:
 
-
-	virtual void OnActivatedForInteract_Implementation(AActor* InstigatedBy, UFTT_InteractionComponent* InstigatorInteractionComponent);
-
-	virtual void OnEndIntaractWith_Implementation(AActor* InteractedActor, UFTT_InteractionComponent* InteractionComponent);
+	UFUNCTION(BlueprintCallable, Category = "Turtle")
+		void SetStartEndTransform(const FTransform& StartTransform, const FTransform& EndTransform);
 
 
 //Blueprint values
 public:
 
-
 	/*
-		Can only interact with one object at a time.
+		Transform where the Turtle starts to move.
 	*/
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InteractComponent")
-		FTransform TurtleEndLocation;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Turtle")
+		FTransform TurtleStartTransform;
+	/*
+		Transform where the Turtle end to move.
+	*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Turtle")
+		FTransform TurtleEndTransform;
 
-	
 };

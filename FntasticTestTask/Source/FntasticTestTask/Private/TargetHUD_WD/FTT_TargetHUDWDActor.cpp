@@ -63,7 +63,7 @@ void AFTT_TargetHUDWDActor::Tick(float DeltaTime)
 
 
 
-void AFTT_TargetHUDWDActor::ShowTargetByComp(USceneComponent* InTargetingActorComp, USceneComponent* InPlayerViewComponent, FName InSocketName)
+void AFTT_TargetHUDWDActor::ShowTargetByComp(USceneComponent* InTargetingActorComp, USceneComponent* InPlayerViewComponent)
 {
 	if (!IsValid(TargetWDComponent)) return;
 	if (!IsValid(InTargetingActorComp) || !IsValid(InPlayerViewComponent)) return;
@@ -82,9 +82,7 @@ void AFTT_TargetHUDWDActor::ShowTargetByComp(USceneComponent* InTargetingActorCo
 		TargetWDComponent->RequestRedraw();
 	}
 
-
 	if (!GetCanHUDBeVisibleNow()) return;
-
 
 	SetActorTickEnabled(true);
 	SetActorHiddenInGame(false);

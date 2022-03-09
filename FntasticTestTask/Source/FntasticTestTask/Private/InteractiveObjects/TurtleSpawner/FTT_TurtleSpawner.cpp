@@ -16,18 +16,14 @@ void AFTT_TurtleSpawner::OnActivatedForInteract_Implementation(AActor* Instigate
 
 	if (TurtleClass != nullptr && TurtleEndPoint != nullptr)
 	{
-		AFTT_Turtle* LTurtle = GetWorld()->SpawnActor<AFTT_Turtle>(TurtleClass, GetTransform(), SpawnInfo);
-		LTurtle->TurtleEndLocation = TurtleEndPoint->GetTransform();
+		if (AFTT_Turtle* LTurtle = GetWorld()->SpawnActor<AFTT_Turtle>(TurtleClass, GetTransform(), SpawnInfo)) 
+		{
+			LTurtle->SetStartEndTransform(GetTransform(), TurtleEndPoint->GetTransform());
 
-		InstigatorInteractionComponent->InteractWith(LTurtle);
+			InstigatorInteractionComponent->InteractWith(LTurtle);
+		}
+
 	}
 
-
 	InstigatorInteractionComponent->EndInteractWith(this);
-}
-
-
-void AFTT_TurtleSpawner::OnEndIntaractWith_Implementation(AActor* InteractedActor, UFTT_InteractionComponent* InteractionComponent)
-{
-
 }

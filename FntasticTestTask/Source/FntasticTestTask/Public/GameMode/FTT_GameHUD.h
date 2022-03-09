@@ -7,17 +7,20 @@
 #include "FTT_GameHUD.generated.h"
 
 /*
-
+	GameHUD
 */
 UCLASS()
 class FNTASTICTESTTASK_API AFTT_GameHUD : public AHUD
 {
 	GENERATED_BODY()
 
+//constructor
 public:
 
 	AFTT_GameHUD();
 
+
+//c++ public methods
 public:
 
 	/*
@@ -25,11 +28,17 @@ public:
 	*/
 	virtual void DrawHUD() override;
 
+
+//........................................................................................................................//
+
+
+
+//Blueprint values
 public:
 
 	/*
 		Crosshair asset pointer
 	*/
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InteractComponent")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GameHUD")
 		class UTexture2D* CrosshairTex;
 };

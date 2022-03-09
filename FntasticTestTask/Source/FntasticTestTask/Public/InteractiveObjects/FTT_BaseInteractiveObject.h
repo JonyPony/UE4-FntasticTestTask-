@@ -27,6 +27,7 @@ protected:
 	
 	virtual void BeginPlay() override;
 
+
 	//~ Begin IFTT_InteractiveObjectInterface
 	virtual bool GetCanBeInteractedNow_Implementation() const override { return false; }
 	virtual bool GetCanBeTargetedNow_Implementation() const override { return false; }
@@ -36,6 +37,7 @@ protected:
 
 
 //>>............................................................................................................<<//
+
 
 
 //Blueprint methods

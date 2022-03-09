@@ -14,6 +14,14 @@ class FNTASTICTESTTASK_API AFTT_InteractionButton : public AFTT_BaseInteractiveO
 	GENERATED_BODY()
 
 
+//c++ protected methods
+protected:
+
+	//~ Begin IFTT_InteractiveObjectInterface
+	virtual bool GetCanBeInteractedNow_Implementation() const override { return true; }
+	virtual bool GetCanBeTargetedNow_Implementation() const override { return true; }
+	//~End IFTT_InteractiveObjectInterface
+
 
 //Blueprint methods
 public:
@@ -21,15 +29,14 @@ public:
 
 	virtual void OnActivatedForInteract_Implementation(AActor* InstigatedBy, UFTT_InteractionComponent* InstigatorInteractionComponent);
 
-	virtual void OnEndIntaractWith_Implementation(AActor* InteractedActor, UFTT_InteractionComponent* InteractionComponent);
 
 //Blueprint values
 public:
 
 	/*
-		Can only interact with one object at a time.
+		Object with which to interact.
 	*/
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InteractComponent")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InteractionButton")
 		AFTT_BaseInteractiveObject* InterectedObject = nullptr;
 
 	

@@ -8,37 +8,41 @@
 
 class AFTT_Turtle;
 
-/*
 
-*/
 UCLASS()
 class FNTASTICTESTTASK_API AFTT_TurtleSpawner : public AFTT_BaseInteractiveObject
 {
 	GENERATED_BODY()
 
+
+//c++ protected methods
+protected:
+
+	//~ Begin IFTT_InteractiveObjectInterface
+	virtual bool GetCanBeInteractedNow_Implementation() const override { return true; }
+	//~End IFTT_InteractiveObjectInterface
+
+
+
 //Blueprint methods
 public:
 
-
 	virtual void OnActivatedForInteract_Implementation(AActor* InstigatedBy, UFTT_InteractionComponent* InstigatorInteractionComponent);
-
-	virtual void OnEndIntaractWith_Implementation(AActor* InteractedActor, UFTT_InteractionComponent* InteractionComponent);
 
 
 //Blueprint values
 public:
 
 	/*
-		Can only interact with one object at a time.
+		Class of Turtle.
 	*/
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InteractComponent")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "TurtleSpawner")
 		TSubclassOf<AFTT_Turtle> TurtleClass = nullptr;
 
-
 	/*
-		Can only interact with one object at a time.
+		Actor defining final point of turtle movement.
 	*/
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InteractComponent")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "TurtleSpawner")
 		AActor* TurtleEndPoint = nullptr;
 	
 };

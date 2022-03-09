@@ -20,15 +20,15 @@ UFTT_InteractionComponent::UFTT_InteractionComponent()
 void UFTT_InteractionComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 
 void UFTT_InteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
 }
+
+
 
 
 bool UFTT_InteractionComponent::GetCanInteractWithActor_Implementation(AActor* Actor) const
@@ -41,38 +41,29 @@ bool UFTT_InteractionComponent::GetCanInteractWithActor_Implementation(AActor* A
 		IsActorAllowInteract = IFTT_InteractiveObjectInterface::Execute_GetCanBeInteractedNow(Actor);
 	}
 
-	FVector Origin;
-	FVector BoxExtend;
-	Actor->GetActorBounds(true, Origin, BoxExtend);
-
-	FVector MyLocation = MyActor->GetActorLocation();
-
-	const float dx = FMath::Max3<float>(Origin.X - BoxExtend.X - MyLocation.X, 0, MyLocation.X - (Origin.X + BoxExtend.X));
-	const float dy = FMath::Max3<float>(Origin.Y - BoxExtend.Y - MyLocation.Y, 0, MyLocation.Y - (Origin.Y + BoxExtend.Y));
-	const float dz = FMath::Max3<float>(Origin.Z - BoxExtend.Z - MyLocation.Z, 0, MyLocation.Z - (Origin.Z + BoxExtend.Z));
-
-
-
-	return	(!CanInteractOnlyWithOneActor ||
-		IsActorAllowInteract &&
-		FVector(dx, dy, dz).Size() <= MaxDistanceToInteractObject);
+	return	IsActorAllowInteract;
 }
+
+
+bool UFTT_InteractionComponent::GetCanTargetedActor(AActor* Actor) const
+{
+	bool IsActorAllowTargeted = false;
+
+	if (Actor->GetClass()->ImplementsInterface(UFTT_InteractiveObjectInterface::StaticClass()))
+	{
+		IsActorAllowTargeted = IFTT_InteractiveObjectInterface::Execute_GetCanBeTargetedNow(Actor);
+	}
+
+	return  IsActorAllowTargeted;
+}
+
+
 
 void UFTT_InteractionComponent::AddToPotentialInteract(AActor* InteractiveObject)
 {
 	if (!IsValid(InteractiveObject)) return;
 
-
-	if (CanHaveOnlyOneActorToPotentialInteract)
-	{
-		RemoveAllFromPotentialInteract();
-	}
-	//else if (UniqueInteractionNamesInPotentialInteract.Contains(LInteractiveObjectComponent->InteractionName))
-	//{
-	//	RemoveAllPotentialInteractWithInteractionName(LInteractiveObjectComponent->InteractionName);
-	//}
-
-
+	if (CanHaveOnlyOneActorToPotentialInteract)	RemoveAllFromPotentialInteract();
 
 	PotentialForInteract.AddUnique(InteractiveObject);
 
@@ -98,10 +89,14 @@ void UFTT_InteractionComponent::RemoveAllFromPotentialInteract()
 	PotentialForInteract.Empty();
 }
 
+
 TArray<AActor*> UFTT_InteractionComponent::GetPotentialForInteractObjects() const
 {
 	return PotentialForInteract;
 }
+
+
+
 
 void UFTT_InteractionComponent::InteractWith_Implementation(AActor* InteractiveObject)
 {
@@ -116,12 +111,7 @@ void UFTT_InteractionComponent::InteractWith_Implementation(AActor* InteractiveO
 
 void UFTT_InteractionComponent::InteractWithPotentialForInteract_Implementation()
 {
-	if (PotentialForInteract.Num() <= 0) return;
-
-	if (AFTT_BaseInteractiveObject* InteractiveObject = Cast<AFTT_BaseInteractiveObject>(PotentialForInteract[0])) 
-	{
-		InteractiveObject->OnActivatedForInteract(InteractiveObject, this);
-	}
+	if (PotentialForInteract.Num() > 0) InteractWith(PotentialForInteract[0]);
 }
 
 void UFTT_InteractionComponent::EndInteractWith_Implementation(AActor* InteractiveObject)
@@ -131,8 +121,4 @@ void UFTT_InteractionComponent::EndInteractWith_Implementation(AActor* Interacti
 		LInteractiveObject->OnEndIntaractWith(InteractiveObject, this);
 	}
 
-}
-
-void UFTT_InteractionComponent::GetInteractingWithObjects(TArray<AActor*>& OutInteractingWithObjects) const
-{
 }

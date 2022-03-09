@@ -12,11 +12,6 @@ void AFTT_InteractionButton::OnActivatedForInteract_Implementation(AActor* Insti
 	if (InstigatorInteractionComponent == nullptr || !IsValid(InterectedObject)) return;
 
 	InstigatorInteractionComponent->InteractWith(InterectedObject);
-
 	InstigatorInteractionComponent->EndInteractWith(this);
 }
 
-
-void AFTT_InteractionButton::OnEndIntaractWith_Implementation(AActor* InteractedActor, UFTT_InteractionComponent* InteractionComponent)
-{
-}

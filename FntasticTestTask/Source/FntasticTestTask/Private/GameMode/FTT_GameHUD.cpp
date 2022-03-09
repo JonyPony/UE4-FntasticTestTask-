@@ -2,8 +2,10 @@
 
 
 #include "GameMode/FTT_GameHUD.h"
+
 #include "Engine/Canvas.h"
 #include "Engine/Texture2D.h"
+
 #include "TextureResource.h"
 #include "CanvasItem.h"
 #include "UObject/ConstructorHelpers.h"

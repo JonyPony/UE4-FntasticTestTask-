@@ -6,9 +6,9 @@
 #include "GameFramework/PlayerController.h"
 #include "FTT_PlayerController.generated.h"
 
-/**
- * 
- */
+/*
+	PlayerController
+*/
 UCLASS()
 class FNTASTICTESTTASK_API AFTT_PlayerController : public APlayerController
 {

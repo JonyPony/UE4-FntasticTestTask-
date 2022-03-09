@@ -31,10 +31,9 @@ public:
 protected:
 
 	AActor* TargetingActor = nullptr;
+
 	USceneComponent* TargetingActorComponent = nullptr;
-
 	USceneComponent* PlayerViewComponent = nullptr;
-
 
 
 //>>....................................................................................................<<//
@@ -45,7 +44,7 @@ protected:
 public:
 
 	UFUNCTION(BlueprintCallable, Category = "TargetHUDWDActor")
-		void ShowTargetByComp(USceneComponent* InTargetingActorComp, USceneComponent* InPlayerViewComponent, FName InSocketName = "None");
+		void ShowTargetByComp(USceneComponent* InTargetingActorComp, USceneComponent* InPlayerViewComponent);
 	UFUNCTION(BlueprintCallable, Category = "TargetWDActor")
 		void ShowTargetByActor(AActor* InTargetingActor, USceneComponent* InPlayerViewComponent);
 
@@ -69,8 +68,7 @@ public:
 public:
 
 	/*
-		Key - type of target.
-		Do not use None.
+		Text for TargetWD.
 	*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TargetWDActor")
 		 FText TargetText;
